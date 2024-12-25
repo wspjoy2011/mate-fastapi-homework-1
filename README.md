@@ -118,6 +118,89 @@ def example_route(db: Session = Depends(get_db)):
 
 You can use this pattern across your application for any routes that need database access.
 
+### How to Run the Project
+
+This project is designed to run with **Docker Compose** for ease of setup and also supports manual setup for local development.
+
+---
+
+#### **Running the Project with Docker Compose**
+
+1. Ensure Docker and Docker Compose are installed on your system.
+2. Navigate to the root directory of the project (where the `docker-compose.yml` file is located).
+3. Run the following command to start the services:
+
+   ```bash
+   docker-compose up --build
+   ```
+
+4. When the containers start, the application will:
+   - Automatically populate the database with movie data from the provided dataset (`imdb_movies.csv`).
+   - Launch the API server, which will be accessible at [http://localhost:8000](http://localhost:8000).
+
+5. To stop the services, press `Ctrl+C` and then run:
+
+   ```bash
+   docker-compose down
+   ```
+
+---
+
+#### **Manually Running the Project**
+
+If you prefer to run the project without Docker, you can set it up manually by following these steps:
+
+1. **Set up a Python virtual environment**:
+   ```bash
+   python -m venv .venv
+   ```
+
+2. **Activate the virtual environment**:
+   - On macOS/Linux:
+     ```bash
+     source .venv/bin/activate
+     ```
+   - On Windows:
+     ```bash
+     .venv\Scripts\activate
+     ```
+
+3. **Install Poetry**:
+   ```bash
+   pip install poetry
+   ```
+
+4. **Install project dependencies**:
+   ```bash
+   poetry install
+   ```
+
+5. **Populate the database**:
+   Run the database seeding script to populate the SQLite database:
+   ```bash
+   python src/database/populate.py
+   ```
+
+6. **Start the FastAPI application**:
+   ```bash
+   uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
+   ```
+
+   The API will be accessible at [http://localhost:8000](http://localhost:8000).
+
+---
+
+### Notes
+
+- **Database Seeding**: Whether running through Docker Compose or manually, the database is automatically populated with movie data during the initial setup.
+- **API Documentation**: Once the application is running, you can explore the API documentation at [http://localhost:8000/docs](http://localhost:8000/docs).
+- **Testing**: Tests can be executed using `pytest` with the following command:
+  ```bash
+  pytest
+  ```
+
+This setup ensures flexibility, whether you prefer running the project in a containerized environment or directly on your development machine.
+
 ### Task Description: Extending the Cinema Application
 
 In this assignment, you are tasked with continuing the development of the cinema application. Your objective is to implement two endpoints in the `schemas/movies.py` and `routes/movies.py` files. The rest of the application, including database models and utility functions, has already been provided.
