@@ -16,7 +16,6 @@ class TestingSettings(Settings):
 
 def get_settings() -> BaseSettings:
     environment = os.getenv("ENVIRONMENT", "developing")
-    print(environment)
     if environment == "testing":
         return TestingSettings()
     return Settings()
